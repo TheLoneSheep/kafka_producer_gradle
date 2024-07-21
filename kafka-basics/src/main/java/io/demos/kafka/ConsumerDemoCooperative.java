@@ -2,6 +2,7 @@ package io.demos.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -12,9 +13,9 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class ConsumerDemoWithShutdown {
+public class ConsumerDemoCooperative {
 
-    private static final Logger log = LoggerFactory.getLogger(ConsumerDemoWithShutdown.class.getSimpleName());
+    private static final Logger log = LoggerFactory.getLogger(ConsumerDemoCooperative.class.getSimpleName());
 
     public static void main(String[] args) {
         log.info("I'm a Kafka consumer!");
@@ -36,7 +37,7 @@ public class ConsumerDemoWithShutdown {
         properties.setProperty("group.id", groupId);
 
         properties.setProperty("auto.offset.reset", "earliest");
-
+        properties.setProperty("partition.assignment.strategy", CooperativeStickyAssignor.class.getName());
 
         // create a Consumer
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
@@ -72,7 +73,7 @@ public class ConsumerDemoWithShutdown {
             // poll data
             while (true) {
 
-
+                
 
                 ConsumerRecords<String, String> records =
                         consumer.poll(Duration.ofMillis(1000));
