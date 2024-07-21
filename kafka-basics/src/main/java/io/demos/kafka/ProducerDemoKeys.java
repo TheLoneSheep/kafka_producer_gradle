@@ -28,17 +28,22 @@ public class ProducerDemoKeys {
         properties.setProperty("key.serializer", StringSerializer.class.getName());
         properties.setProperty("value.serializer", StringSerializer.class.getName());
 
-        properties.setProperty("batch.size", "400");
+
         
         // Create the Producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 2; j++) {
 
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 10; i++) {
+
+                String topic = "demo_java";
+                String key = "id_" + i;
+                String value = "hello world " + i;
+
                 // Create a Producer record
                 ProducerRecord<String, String> producerRecord =
-                        new ProducerRecord<>("demo_java", "hello world" + i);
+                        new ProducerRecord<>(topic, key, value);
 
                 // send data
                 producer.send(producerRecord, new Callback() {
@@ -47,17 +52,14 @@ public class ProducerDemoKeys {
                         // executed everytime a record is successfully sent or an exception is thrown
                         if (e == null) {
                             // record is successfully sent
-                            log.info("Received new metadata \n" +
-                                    "Topic: " + metadata.topic() + "\n" +
-                                    "Partition: " + metadata.partition() + "\n" +
-                                    "Offset: " + metadata.offset() + "\n" +
-                                    "Timestamp: " + metadata.timestamp());
+                            log.info("Key: " + key + " | Partition: " + metadata.partition());
                         } else {
                             log.error("Error while producing", e);
                         }
                     }
                 });
             }
+
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
