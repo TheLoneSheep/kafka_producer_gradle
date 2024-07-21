@@ -1,0 +1,3 @@
+rootProject.name = 'kafka_producer_gradle'
+include 'kafka-basics'
+
