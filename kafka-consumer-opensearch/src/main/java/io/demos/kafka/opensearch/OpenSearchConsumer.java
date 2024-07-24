@@ -19,7 +19,7 @@ import java.net.URI;
 
 public class OpenSearchConsumer {
     public static RestHighLevelClient createOpenSearchClient() {
-        String connString = "http://localhost:9200";
+        String connString = "https://ixklue550w:us66l48wje@kafka-test-7746956279.eu-central-1.bonsaisearch.net:443";
 //        String connString = "https://c9p5mwld41:45zeygn9hy@kafka-course-2322630105.eu-west-1.bonsaisearch.net:443";
 
         // we build a URI from the connection string
