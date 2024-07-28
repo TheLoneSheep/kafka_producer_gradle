@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 public class OpenSearchConsumer {
+
     public static RestHighLevelClient createOpenSearchClient() {
         String connString = "https://ixklue550w:us66l48wje@kafka-test-7746956279.eu-central-1.bonsaisearch.net:443";
 //        String connString = "https://c9p5mwld41:45zeygn9hy@kafka-course-2322630105.eu-west-1.bonsaisearch.net:443";
@@ -76,6 +77,7 @@ public class OpenSearchConsumer {
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 
 
         // create a Consumer
